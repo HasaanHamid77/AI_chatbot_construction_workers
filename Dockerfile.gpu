@@ -1,0 +1,12 @@
+# GPU container for vLLM OpenAI-compatible server
+FROM vllm/vllm-openai:latest
+
+# Model parameters (override via env or RunPod template)
+ENV MODEL=Qwen2.5-3B-Instruct
+ENV MODEL_NAME=Qwen2.5-3B-Instruct
+ENV PORT=8001
+
+EXPOSE 8001
+
+CMD ["bash", "-lc", "python3 -m vllm.entrypoints.openai.api_server --model ${MODEL} --host 0.0.0.0 --port ${PORT} --served-model-name ${MODEL_NAME} --max-model-len 4096"]
+
